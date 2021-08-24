@@ -8,50 +8,73 @@ using University.DataAccess.Data;
 
 namespace University.DataAccess.Repository
 {
-    public class Repository<T> : IRepository<T> where T : BaseEntity
+    public class Repository : IRepository
     {
-        private readonly ApplicationDbContext _context;
-        private DbSet<T> _entity;
+        private readonly ApplicationDbContext _dbContext;
         string errorMessage = string.Empty;
 
         public Repository(ApplicationDbContext context)
         {
-            _context = context;
-            _entity = context.Set<T>();
+            _dbContext = context;
         }
-        public IEnumerable<T> GetAll()
+
+        public IEnumerable<TEntity> GetAll<TEntity>() where TEntity : BaseEntity
         {
-            return _entity.AsEnumerable();
+            return _dbContext.Set<TEntity>().AsEnumerable();
         }
-        public T Get(int id)
+
+        public IQueryable<TEntity> GetQueryable<TEntity>() where TEntity : BaseEntity
         {
-            return _entity.SingleOrDefault(s => s.Id == id);
+            return _dbContext.Set<TEntity>().AsQueryable();
         }
-        public void Insert(T entity)
+
+        public TEntity Get<TEntity>(int id) where TEntity : BaseEntity
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException("entity is null");
-            }
-            _entity.Add(entity);
-            _context.SaveChanges();
+            return _dbContext.Set<TEntity>().SingleOrDefault(e => e.Id == id);
         }
-        public void Update(T entity)
+
+        public void Insert<TEntity>(TEntity entity) where TEntity : BaseEntity
         {
-            if (_entity == null)
-            {
-                throw new ArgumentNullException("entity");
-            }
-            _context.SaveChanges();
+            if (entity == null) throw new ArgumentNullException("cannot insert null entity!!");
+
+            _dbContext.Set<TEntity>().Add(entity);
+            _dbContext.SaveChanges();
         }
-        public void Delete(T entity)
+
+        public void Update<TEntity>(TEntity entity) where TEntity : BaseEntity
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException("entity");
-            }
-            _entity.Remove(entity);
-            _context.SaveChanges();
+            if (entity == null) throw new ArgumentNullException("cannot update null entity!!");
+            _dbContext.Set<TEntity>().Update(entity);
+            _dbContext.SaveChanges();
+        }
+
+        public void Delete<TEntity>(TEntity entity) where TEntity : BaseEntity
+        {
+            if (entity == null) throw new ArgumentNullException("cannot delete null entity!!");
+
+            _dbContext.Set<TEntity>().Remove(entity);
+            _dbContext.SaveChanges();
+        }
+
+        public void Insert<TEntity>(IEnumerable<TEntity> entities) where TEntity : BaseEntity
+        {
+            if (entities == null) throw new ArgumentNullException(nameof(entities));
+            _dbContext.Set<TEntity>().AddRange(entities);
+            _dbContext.SaveChanges();
+        }
+
+        public void Update<TEntity>(IEnumerable<TEntity> entities) where TEntity : BaseEntity
+        {
+            if (entities == null) throw new ArgumentNullException(nameof(entities));
+            _dbContext.Set<TEntity>().UpdateRange(entities);
+            _dbContext.SaveChanges();
+        }
+
+        public void Delete<TEntity>(IEnumerable<TEntity> entities) where TEntity : BaseEntity
+        {
+            if (entities == null) throw new ArgumentNullException(nameof(entities));
+            _dbContext.Set<TEntity>().RemoveRange(entities);
+            _dbContext.SaveChanges();
         }
     }
 }
