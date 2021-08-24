@@ -34,6 +34,10 @@ namespace University.Web
             services.AddScoped(typeof(IRepository), typeof(Repository));
             #endregion
 
+            #region [register InMemoryDB to the dependency injection during the Application start up.]
+            // services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase(databaseName: "UniversityAppDB"));
+            //services.AddScoped(typeof(IRepository), typeof(Repository));
+            #endregion
 
         }
 
