@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "University.Web", "University.Web\University.Web.csproj", "{48847A9B-3410-4256-92AF-7986CC081729}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "University.Web", "University.Web\University.Web.csproj", "{48847A9B-3410-4256-92AF-7986CC081729}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "University.DataAccess", "University.DataAccess\University.DataAccess.csproj", "{906F247C-B7FC-4C06-B2EA-7200A805F146}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "University.DataAccess", "University.DataAccess\University.DataAccess.csproj", "{906F247C-B7FC-4C06-B2EA-7200A805F146}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "University.Services", "University.Services\University.Services.csproj", "{AE3903C4-394B-4C9C-889F-74B9C54C24DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "University.Services", "University.Services\University.Services.csproj", "{AE3903C4-394B-4C9C-889F-74B9C54C24DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "University.Test", "University.Test\University.Test.csproj", "{6AE59E9D-E3BB-42DC-AF76-F0E02B56F945}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "University.Test", "University.Test\University.Test.csproj", "{6AE59E9D-E3BB-42DC-AF76-F0E02B56F945}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "University.WebAPI", "University.WebAPI\University.WebAPI.csproj", "{C2F4A8E9-7692-4740-B508-05742EB4D07A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{6AE59E9D-E3BB-42DC-AF76-F0E02B56F945}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AE59E9D-E3BB-42DC-AF76-F0E02B56F945}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AE59E9D-E3BB-42DC-AF76-F0E02B56F945}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2F4A8E9-7692-4740-B508-05742EB4D07A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2F4A8E9-7692-4740-B508-05742EB4D07A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2F4A8E9-7692-4740-B508-05742EB4D07A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2F4A8E9-7692-4740-B508-05742EB4D07A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
