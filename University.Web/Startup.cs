@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using University.DataAccess.Data;
 using University.DataAccess.Repository;
+using University.Services;
 
 namespace University.Web
 {
@@ -33,7 +34,7 @@ namespace University.Web
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped(typeof(IRepository), typeof(Repository));
             #endregion
-
+            services.AddScoped<ICourseServices, CourseServices>();
             #region [register InMemoryDB to the dependency injection during the Application start up.]
             // services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase(databaseName: "UniversityAppDB"));
             //services.AddScoped(typeof(IRepository), typeof(Repository));
