@@ -9,5 +9,9 @@ namespace University.DataAccess.Models
 {
    public class Grade: BaseEntity
     {
+        public string GradeName { get; set; }
+        public string Section { get; set; }
+
+        public IList<Student> Students { get; set; }
     }
 }
