@@ -38,11 +38,11 @@
                        
                       
                         <td>
-                            <a class="btn btn-primary text-white" asp-action="Update" asp-route-Id="@item.Id">
+                            <a class="btn btn-primary text-white" asp-action="Edit" asp-route-Id="@item.Id">
                                 Edit
                             </a>
-                            <a class="btn btn-info text-white" asp-action="AddStudentToCurrntCourse" asp-route-Id="@item.Id">
-                                Student
+                            <a class="btn btn-info text-white" asp-action="AssignStudents" asp-route-Id="@item.Id">
+                                Assign Students
                             </a>
                             <a class="btn btn-danger text-white" asp-action="Delete" asp-route-Id="@item.Id">
                                 Delete

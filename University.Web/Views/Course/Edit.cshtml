@@ -1,12 +1,12 @@
 ﻿@model University.Services.DTOs.CourseDTO
 @{
-    var title = "Create Course";
+    var title = "Edit Course";
 }
 <form method="post">
     <div class="row p-3 border">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="Id" />
-      
+
         <div class="col-12 border-bottom">
             <h2 class="text-primary">@title</h2>
         </div>
@@ -25,15 +25,15 @@
                     <label asp-for="Description"></label>
                 </div>
                 <div class="col-8">
-                    <textarea  asp-for="Description" class="form-control"></textarea>
+                    <textarea asp-for="Description" class="form-control"></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
             </div>
 
-            
+
             <div class="form-group row">
                 <div class="col-4 offset-4">
-                        <button type="submit" class="btn btn-primary form-control">Create</button>
+                    <button type="submit" class="btn btn-primary form-control">Update</button>
                 </div>
                 <div class="col-4">
                     <a asp-action="Index" class="btn btn-success form-control">Back to List</a>

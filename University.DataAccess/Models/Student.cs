@@ -13,7 +13,7 @@ namespace University.DataAccess.Models
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public byte[] Photo { get; set; }
-        public decimal Height { get; set; }
+        public float Height { get; set; }
         public float Weight { get; set; }
 
         public int GradeId { get; set; }

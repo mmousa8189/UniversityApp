@@ -36,7 +36,7 @@ namespace University.DataAccess.Repository
         public void Insert<TEntity>(TEntity entity) where TEntity : BaseEntity
         {
             if (entity == null) throw new ArgumentNullException("cannot insert null entity!!");
-
+            entity.CreatedDate = DateTime.Now;
             _dbContext.Set<TEntity>().Add(entity);
             _dbContext.SaveChanges();
         }
@@ -44,6 +44,7 @@ namespace University.DataAccess.Repository
         public void Update<TEntity>(TEntity entity) where TEntity : BaseEntity
         {
             if (entity == null) throw new ArgumentNullException("cannot update null entity!!");
+            entity.UpdatedDate = DateTime.Now;
             _dbContext.Set<TEntity>().Update(entity);
             _dbContext.SaveChanges();
         }
@@ -59,6 +60,10 @@ namespace University.DataAccess.Repository
         public void Insert<TEntity>(IEnumerable<TEntity> entities) where TEntity : BaseEntity
         {
             if (entities == null) throw new ArgumentNullException(nameof(entities));
+            foreach (var entity in entities)
+            {
+                entity.CreatedDate = DateTime.Now;
+            }
             _dbContext.Set<TEntity>().AddRange(entities);
             _dbContext.SaveChanges();
         }
@@ -66,6 +71,10 @@ namespace University.DataAccess.Repository
         public void Update<TEntity>(IEnumerable<TEntity> entities) where TEntity : BaseEntity
         {
             if (entities == null) throw new ArgumentNullException(nameof(entities));
+            foreach (var entity in entities)
+            {
+                entity.UpdatedDate = DateTime.Now;
+            }
             _dbContext.Set<TEntity>().UpdateRange(entities);
             _dbContext.SaveChanges();
         }
