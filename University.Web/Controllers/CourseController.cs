@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +8,7 @@ using System.Threading.Tasks;
 using University.DataAccess.Models;
 using University.DataAccess.Repository;
 using University.Services;
+using University.Services.DomainServices;
 using University.Services.DTOs;
 
 namespace University.Web.Controllers
@@ -13,14 +16,19 @@ namespace University.Web.Controllers
     public class CourseController : Controller
     {
         private readonly ICourseServices _courseServices;
+        private readonly INotyfService _notyf;
+        private readonly IRepository _repository;
 
-        public CourseController(ICourseServices courseServices)
+        public CourseController(ICourseServices courseServices, INotyfService notyf, IRepository repository)
         {
             _courseServices = courseServices;
+            _notyf = notyf;
+            _repository = repository;
         }
         public IActionResult Index()
         {
             var list = _courseServices.GetAll();
+            var listInc = _repository.GetQueryable<Course>().Include(c => c.StudentCourses).ToList();
             return View(list);
         }
         public IActionResult Create()
@@ -59,16 +67,22 @@ namespace University.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult AssignStudents()
+
+        public IActionResult AssignStudents(int? id)
         {
-            throw new NotImplementedException();
+            if (!id.HasValue)
+                return NotFound();
+            var list = _courseServices.GetAllStudentWithCourseToAssign(id.Value);
+            return View(list);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AssignStudents(Course course)
+        public IActionResult AssignStudents(AssignStudentsDTO assignStudentsDTO)
         {
-            throw new NotImplementedException();
+            _courseServices.AssgineStudentsToCourse(assignStudentsDTO);
+            _notyf.Success($"Success Assign Students  to Course {assignStudentsDTO.CourseName}");
+            return RedirectToAction(nameof(Index));
         }
 
     }

@@ -12,6 +12,6 @@ namespace University.DataAccess.Models
         public string GradeName { get; set; }
         public string Section { get; set; }
 
-        public IList<Student> Students { get; set; }
+        public virtual IList<Student> Students { get; set; }
     }
 }

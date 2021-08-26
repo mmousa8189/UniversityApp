@@ -16,8 +16,8 @@ namespace University.DataAccess.Models
         public float Height { get; set; }
         public float Weight { get; set; }
 
-        public int GradeId { get; set; }
-        public Grade Grade { get; set; }
+        public virtual int? GradeId { get; set; }
+        public virtual Grade Grade { get; set; }
 
         public IList<StudentCourse> StudentCourses { get; set; }
 

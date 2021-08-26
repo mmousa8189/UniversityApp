@@ -1,0 +1,88 @@
+﻿@model University.Services.DTOs.StudentDTO
+@{
+    var title = "Edit Student";
+}
+<form method="post">
+    <div class="row p-3 border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+
+        <div class="col-12 border-bottom">
+            <h2 class="text-primary">@title</h2>
+        </div>
+        <div class="col-8 pt-4">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="FirstName"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="LastName"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="DateOfBirth"></label>
+                </div>
+                <div class="col-8">
+                    @if (Model.Id != 0)
+                    {
+                        <input asp-for="DateOfBirth" placeholder="dd-mm-yy" id="datepicker_dob" type="text" class="form-control" /> }
+                    else
+                    {
+                        <input asp-for="DateOfBirth" value="" placeholder="dd-mm-yy" id="datepicker_dob" type="text" class="form-control" />
+                    }
+                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Height"></label>
+                </div>
+                <div class="col-8">
+
+                    <input type="number" asp-for="Height" min=0 max=250 step=0.01 class="form-control" />
+                    <span asp-validation-for="Height" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Weight"></label>
+                </div>
+                <div class="col-8">
+                    <input type="number" asp-for="Weight" min=0 max=200 step=0.01 class="form-control" />
+                    <span asp-validation-for="Weight" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <div class="col-4 offset-4">
+                    <button type="submit" class="btn btn-primary form-control">Create</button>
+                </div>
+                <div class="col-4">
+                    <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(function () {
+            $("#datepicker_dob").datepicker({ dateFormat: 'dd-mm-yy' });
+        });
+    </script>
+}

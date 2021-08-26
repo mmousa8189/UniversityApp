@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using University.DataAccess.Data;
 using University.DataAccess.Repository;
 using University.Services;
+using University.Services.DomainServices;
 
 namespace University.Web
 {
@@ -35,10 +38,13 @@ namespace University.Web
             services.AddScoped(typeof(IRepository), typeof(Repository));
             #endregion
             services.AddScoped<ICourseServices, CourseServices>();
+            services.AddScoped<IStudentServices, StudentServices>();
             #region [register InMemoryDB to the dependency injection during the Application start up.]
             // services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase(databaseName: "UniversityAppDB"));
             //services.AddScoped(typeof(IRepository), typeof(Repository));
             #endregion
+            services.AddNotyf(config => 
+            { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
 
         }
 
@@ -61,7 +67,7 @@ namespace University.Web
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseNotyf();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
