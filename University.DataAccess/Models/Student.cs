@@ -21,5 +21,13 @@ namespace University.DataAccess.Models
 
         public IList<StudentCourse> StudentCourses { get; set; }
 
+        public string FullName
+        {
+            get
+            {
+                return $"{FirstName} {LastName}";
+            }
+        }
+
     }
 }

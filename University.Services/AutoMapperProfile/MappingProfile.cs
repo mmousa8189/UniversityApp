@@ -33,6 +33,7 @@ namespace University.Services.AutoMapperProfile
 
             CreateMap<Course, CourseDTO>();
             #endregion
+
             #region [Course - AssignStudentsDTO - Mapping]
             
 
@@ -50,6 +51,15 @@ namespace University.Services.AutoMapperProfile
                  ForMember(dist => dist.StudentsIds, opt => opt.Ignore());
             #endregion
 
+            #region [Course - CourseStudentViewDTO - Mapping]
+
+            CreateMap<Course, CourseStudentViewDTO>();
+
+            CreateMap<Course, CourseStudentViewDTO>().ReverseMap().
+            ForMember(dist => dist.UpdatedDate, opt => opt.Ignore()).
+                ForMember(dist => dist.CreatedDate, opt => opt.Ignore()).
+                ForMember(dist => dist.StudentCourses, opt => opt.Ignore());
+            #endregion
         }
     }
 }

@@ -17,18 +17,15 @@ namespace University.Web.Controllers
     {
         private readonly ICourseServices _courseServices;
         private readonly INotyfService _notyf;
-        private readonly IRepository _repository;
 
-        public CourseController(ICourseServices courseServices, INotyfService notyf, IRepository repository)
+        public CourseController(ICourseServices courseServices, INotyfService notyf)
         {
             _courseServices = courseServices;
             _notyf = notyf;
-            _repository = repository;
         }
         public IActionResult Index()
         {
             var list = _courseServices.GetAll();
-            var listInc = _repository.GetQueryable<Course>().Include(c => c.StudentCourses).ToList();
             return View(list);
         }
         public IActionResult Create()
@@ -83,6 +80,12 @@ namespace University.Web.Controllers
             _courseServices.AssgineStudentsToCourse(assignStudentsDTO);
             _notyf.Success($"Success Assign Students  to Course {assignStudentsDTO.CourseName}");
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult ViewCourseWithStudents(int id)
+        {
+            var courseStudentViewDTO = _courseServices.GetCourseStudentForView(id);
+            return View(courseStudentViewDTO);
         }
 
     }

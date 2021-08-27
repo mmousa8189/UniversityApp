@@ -18,6 +18,7 @@ namespace University.Services.DomainServices
         public Course GetCourse(int courseId);
         public CourseDTO GetCourseDTO(int courseId);
         public List<Course> GetCoursesByStudentId(int studentId);
+        CourseStudentViewDTO GetCourseStudentForView(int courseId);
         public void UpdateCourse(CourseDTO courseDto);
     }
 }

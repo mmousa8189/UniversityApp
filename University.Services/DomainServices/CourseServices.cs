@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,18 @@ namespace University.Services.DomainServices
             return _repository.GetAll<Course>().ToList();
         }
 
+        public CourseStudentViewDTO GetCourseStudentForView(int courseId)
+        {
+            var course = _repository.GetQueryable<Course>()
+                .Where(c => c.Id == courseId)
+                .Include(c => c.StudentCourses)
+                .ThenInclude(c => c.Student)
+                .Single();
+            var dto = _mapper.Map<CourseStudentViewDTO>(course);
+            dto.StudentsName = course.StudentCourses.Select(a => a.Student.FullName).ToList();
+            return dto;
+        }
+
         public Course GetCourse(int courseId)
         {
             return _repository.Get<Course>(courseId);
@@ -45,7 +58,7 @@ namespace University.Services.DomainServices
 
         public AssignStudentsDTO GetAllStudentWithCourseToAssign(int courseId)
         {
-            var course =  GetCourse(courseId);
+            var course = GetCourse(courseId);
             var dto = _mapper.Map<AssignStudentsDTO>(course);
             var students = _studentServices.GetListStudentDTO();
 
@@ -92,7 +105,7 @@ namespace University.Services.DomainServices
                 };
                 list.Add(relation);
             }
-           // courseFromDb.StudentCourses = new List<StudentCourse>();
+            // courseFromDb.StudentCourses = new List<StudentCourse>();
             courseFromDb.StudentCourses = list;
             _repository.Update(courseFromDb);
         }
