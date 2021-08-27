@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using University.DataAccess.Data;
 using University.DataAccess.Repository;
 using University.Services;
+using University.Services.AutoMapperProfile;
 using University.Services.DomainServices;
 
 namespace University.Web
@@ -31,6 +32,7 @@ namespace University.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddAutoMapper(typeof(MappingProfile));
             #region [we register both context and repository to the dependency injection during the Application start up.]
             // add Db context with ConnectionString
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -45,6 +47,7 @@ namespace University.Web
             #endregion
             services.AddNotyf(config => 
             { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
+
 
         }
 

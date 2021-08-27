@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,21 +13,24 @@ namespace University.Services.DomainServices
     public class StudentServices : IStudentServices
     {
         private readonly IRepository _repository;
-        public StudentServices(IRepository repository)
+        private readonly IMapper _mapper;
+        public StudentServices(IRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         public void AddStudent(StudentDTO studentDTO)
         {
-            var student = new Student()
-            {
-                FirstName = studentDTO.FirstName,
-                LastName = studentDTO.LastName,
-                DateOfBirth = studentDTO.DateOfBirth,
-                Height = studentDTO.Height,
-                Weight = studentDTO.Weight
-            };
+            //var student = new Student()
+            //{
+            //    FirstName = studentDTO.FirstName,
+            //    LastName = studentDTO.LastName,
+            //    DateOfBirth = studentDTO.DateOfBirth,
+            //    Height = studentDTO.Height,
+            //    Weight = studentDTO.Weight
+            //};
+            var student = _mapper.Map<Student>(studentDTO);
             _repository.Insert(student);
         }
 
@@ -58,15 +62,16 @@ namespace University.Services.DomainServices
         public StudentDTO GetStudentDTO(int studentId)
         {
             var student = _repository.Get<Student>(studentId);
-            StudentDTO dto = new StudentDTO()
-            {
-                Id = student.Id,
-                FirstName = student.FirstName,
-                LastName = student.LastName,
-                DateOfBirth = student.DateOfBirth,
-                Height = student.Height,
-                Weight = student.Weight
-            };
+            StudentDTO dto =  _mapper.Map<StudentDTO>(student);
+            //StudentDTO dto = new StudentDTO()
+            //{
+            //    Id = student.Id,
+            //    FirstName = student.FirstName,
+            //    LastName = student.LastName,
+            //    DateOfBirth = student.DateOfBirth,
+            //    Height = student.Height,
+            //    Weight = student.Weight
+            //};
             return dto;
         }
 

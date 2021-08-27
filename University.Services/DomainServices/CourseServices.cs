@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,10 +15,13 @@ namespace University.Services.DomainServices
     {
         private readonly IRepository _repository;
         private readonly IStudentServices _studentServices;
-        public CourseServices(IRepository repository, IStudentServices studentServices)
+        private readonly IMapper _mapper;
+
+        public CourseServices(IRepository repository, IStudentServices studentServices, IMapper mapper)
         {
             _repository = repository;
             _studentServices = studentServices;
+            _mapper = mapper;
         }
         public List<Course> GetAll()
         {
@@ -31,12 +35,7 @@ namespace University.Services.DomainServices
         public CourseDTO GetCourseDTO(int courseId)
         {
             var course = _repository.Get<Course>(courseId);
-            CourseDTO dto = new CourseDTO()
-            {
-                Id = course.Id,
-                CourseName = course.CourseName,
-                Description = course.Description
-            };
+            CourseDTO dto = _mapper.Map<CourseDTO>(course);
             return dto;
         }
         public List<Course> GetCoursesByStudentId(int studentId)
@@ -46,9 +45,8 @@ namespace University.Services.DomainServices
 
         public AssignStudentsDTO GetAllStudentWithCourseToAssign(int courseId)
         {
-            var dto = new AssignStudentsDTO();
-            dto.Id =  GetCourse(courseId).Id;
-            dto.CourseName =  GetCourse(courseId).CourseName;
+            var course =  GetCourse(courseId);
+            var dto = _mapper.Map<AssignStudentsDTO>(course);
             var students = _studentServices.GetListStudentDTO();
 
             dto.StudentList = students.Select(s => new SelectListItem
@@ -61,11 +59,7 @@ namespace University.Services.DomainServices
 
         public void AddCourse(CourseDTO courseDto)
         {
-            var course = new Course()
-            {
-                CourseName = courseDto.CourseName,
-                Description = courseDto.Description
-            };
+            var course = _mapper.Map<Course>(courseDto);
             _repository.Insert(course);
         }
 
