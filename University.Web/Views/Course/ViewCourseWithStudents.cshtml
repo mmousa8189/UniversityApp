@@ -1,0 +1,41 @@
+﻿@model University.Services.DTOs.CourseStudentViewDTO
+
+<br />
+<br />
+<div class="border p-4 bg-white">
+    <div class="row">
+        <div class="col-4">
+            <h2 class="text-info"> Course With Student List</h2>
+        </div>
+
+        <div class=" col-4 text-right">
+            <label asp-for="CourseName"></label>
+            <input readonly asp-for="CourseName" class="form-control" />
+        </div>
+        <div class=" col-4 text-right">
+            <label asp-for="Description"></label>
+            <textarea readonly asp-for="Description" class="form-control"></textarea>
+        </div>
+    </div>
+    <br />
+    <div>
+       
+            <table class="table table-striped border">
+                <tr class="table-secondary">
+                    <th>
+                        Student Name
+                    </th>
+                </tr>
+                @foreach (var name in Model.StudentsName)
+                {
+                    <tr>
+                        <td>
+                            @name
+                        </td>
+                    </tr>
+                }
+            </table>
+        
+       
+    </div>
+</div>

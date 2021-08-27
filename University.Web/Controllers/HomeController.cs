@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using University.DataAccess.Models;
+using University.DataAccess.Repository;
 using University.Web.Models;
 
 namespace University.Web.Controllers
@@ -12,6 +14,7 @@ namespace University.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -20,6 +23,10 @@ namespace University.Web.Controllers
 
         public IActionResult Index()
         {
+            _logger.LogInformation("LogInformation");
+            _logger.LogDebug("LogDebug");
+            _logger.LogWarning("LogWarning");
+            _logger.LogError("LogError");
             return View();
         }
 

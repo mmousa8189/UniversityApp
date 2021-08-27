@@ -15,7 +15,9 @@ namespace University.DataAccess.FluentConfig
         {
             //Student
             modelBuilder.HasKey(s => s.Id);
+            modelBuilder.HasOne(s => s.Grade).WithMany(g => g.Students).HasForeignKey(s => s.GradeId);
 
+            modelBuilder.Ignore(a => a.FullName);
 
         }
     }

@@ -2,12 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using University.DataAccess.Data;
+using University.DataAccess.Repository;
+using University.Services;
+using University.Services.AutoMapperProfile;
+using University.Services.DomainServices;
 
 namespace University.Web
 {
@@ -24,6 +32,23 @@ namespace University.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddAutoMapper(typeof(MappingProfile));
+            #region [we register both context and repository to the dependency injection during the Application start up.]
+            // add Db context with ConnectionString
+            services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped(typeof(IRepository), typeof(Repository));
+            #endregion
+            services.AddScoped<ICourseServices, CourseServices>();
+            services.AddScoped<IStudentServices, StudentServices>();
+            #region [register InMemoryDB to the dependency injection during the Application start up.]
+            // services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase(databaseName: "UniversityAppDB"));
+            //services.AddScoped(typeof(IRepository), typeof(Repository));
+            #endregion
+            services.AddNotyf(config => 
+            { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,7 +70,7 @@ namespace University.Web
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseNotyf();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

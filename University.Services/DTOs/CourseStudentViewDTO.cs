@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using University.DataAccess.Data;
 
-namespace University.DataAccess.Models
+namespace University.Services.DTOs
 {
-   public class Course : BaseEntity
+   public class CourseStudentViewDTO
     {
         public string CourseName { get; set; }
         public string Description { get; set; }
-        public IList<StudentCourse> StudentCourses { get; set; }
-
+        public List<string> StudentsName { get; set; }
     }
 }

@@ -1,0 +1,57 @@
+﻿@model University.Services.DTOs.AssignStudentsDTO
+@{
+    var title = "Assign Students to Course";
+}
+<form method="post">
+    <div class="row p-3 border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+
+        <div class="col-12 border-bottom">
+            <h2 class="text-primary">@title</h2>
+        </div>
+        <div class="col-8 pt-4">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="CourseName"></label>
+                </div>
+                <div class="col-8">
+                    <input readonly asp-for="CourseName" class="form-control" />
+                    <span asp-validation-for="CourseName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3 pt-3">
+                    <label asp-for="StudentsIds"></label>
+                </div>
+                <div class="col-9">
+
+                    @Html.ListBoxFor(model => model.StudentsIds,
+                   new MultiSelectList(Model.StudentList, "Value", "Text"),
+                   new { @class = "form-control", multiple = "multiple", id = "Student_dropdown" })
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <div class="col-4 offset-4">
+                    <button type="submit" class="btn btn-primary form-control">Assign</button>
+                </div>
+                <div class="col-4">
+                    <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+
+        $(document).ready(function () {
+            $('#Student_dropdown').multiselect();
+        });
+    </script>
+    
+}
